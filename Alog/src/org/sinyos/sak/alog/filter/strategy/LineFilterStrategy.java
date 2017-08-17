@@ -1,7 +1,6 @@
 package org.sinyos.sak.alog.filter.strategy;
 
 import java.io.IOException;
-import java.io.Writer;
 
 /**
  * 行过滤策略
@@ -9,5 +8,5 @@ import java.io.Writer;
  *
  */
 public interface LineFilterStrategy {
-	public LineFilterActive filter(Writer writer, String line) throws IOException;
+	public LineFilterResult filter(LineFilterResult result) throws IOException;
 }

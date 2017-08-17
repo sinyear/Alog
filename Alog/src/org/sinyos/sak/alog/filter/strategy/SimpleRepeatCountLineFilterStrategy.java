@@ -1,21 +1,31 @@
 package org.sinyos.sak.alog.filter.strategy;
 
 import java.io.IOException;
-import java.io.Writer;
 import java.util.Iterator;
 import java.util.TreeMap;
 
+import org.sinyos.framework.common.annotation.Alias;
+
+@Alias("过滤策略-统计重复")
 public class SimpleRepeatCountLineFilterStrategy implements LineFilterStrategy {
 	private TreeMap<String, Integer> repeatCountMap = new TreeMap<String, Integer>();
 	
 	@Override
-	public LineFilterActive filter(Writer writer, String line) throws IOException {
+	public LineFilterResult filter(LineFilterResult result) throws IOException {
+		String line = result.getLine();
 		Integer count = 1;
 		if (repeatCountMap.containsKey(line)) {
 			count += repeatCountMap.get(line);
 		}
 		repeatCountMap.put(line, count);
-		return count == 1 ? LineFilterActive.CONTINUE : LineFilterActive.NONE;
+		if (count == 1) {
+			result.setFilterActive(LineFilterActive.CONTINUE);
+			return result;
+		} else {
+			result.setLine(null);
+			result.setFilterActive(LineFilterActive.NONE);
+			return result;
+		}
 	}
 
 	public String getDescription() {

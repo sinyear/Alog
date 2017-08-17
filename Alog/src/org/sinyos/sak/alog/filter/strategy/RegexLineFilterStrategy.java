@@ -3,6 +3,9 @@ package org.sinyos.sak.alog.filter.strategy;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.sinyos.framework.common.annotation.Alias;
+
+@Alias("过滤策略-正则")
 public class RegexLineFilterStrategy extends AbstractInclusionLineFilterStrategy {
 	private String regex;
 

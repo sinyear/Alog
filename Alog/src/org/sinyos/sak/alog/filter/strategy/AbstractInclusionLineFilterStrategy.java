@@ -1,7 +1,6 @@
 package org.sinyos.sak.alog.filter.strategy;
 
 import java.io.IOException;
-import java.io.Writer;
 /**
  * 包含/不包含（处理与忽略）过滤策略
  * @author zw
@@ -13,40 +12,45 @@ public abstract class AbstractInclusionLineFilterStrategy extends AbstractChainL
 	}
 
 	@Override
-	public LineFilterActive filter(Writer writer, String line) throws IOException {
+	public LineFilterResult filter(LineFilterResult result) throws IOException {
+		String line = result.getLine();
 		boolean conditon = matchCondition(line);
 		if (includeOrExclude()) {
-			return includeFilter(writer, line, conditon);
+			return includeFilter(result, line, conditon);
 		} else {			
-			return excludeFilter(writer, line, conditon);
+			return excludeFilter(result, line, conditon);
 		}
 	}
 	
-	protected LineFilterActive includeFilter(Writer writer, String line, boolean condition) throws IOException {
+	protected LineFilterResult includeFilter(LineFilterResult result, String line, boolean condition) throws IOException {
 		if (condition) {
 			// 包含关系则继续处理下一个，最后才写入
 			LineFilterStrategy nextStrategy = next();
 			if (nextStrategy != null) {
-				return nextStrategy.filter(writer, line);
+				return nextStrategy.filter(result);
 			}
 			
-			writer.write(line);
-			return LineFilterActive.CONTINUE;					
+			result.setFilterActive(LineFilterActive.CONTINUE);
+			return result;
 		}
-		return LineFilterActive.NONE;
+		result.setLine(null);
+		result.setFilterActive(LineFilterActive.NONE);
+		return result;
 	}
 	
-	protected LineFilterActive excludeFilter(Writer writer, String line, boolean condition) throws IOException {
+	protected LineFilterResult excludeFilter(LineFilterResult result, String line, boolean condition) throws IOException {
 		if (condition) {
 			// 不包含关系则继续处理下一个，最后才忽略
 			LineFilterStrategy nextStrategy = next();
 			if (nextStrategy != null) {
-				return nextStrategy.filter(writer, line);
+				return nextStrategy.filter(result);
 			}
 						
-			return LineFilterActive.NONE;					
+			result.setLine(null);
+			result.setFilterActive(LineFilterActive.NONE);					
 		}
-		return LineFilterActive.CONTINUE;
+		result.setFilterActive(LineFilterActive.CONTINUE);
+		return result;
 	}
 	
 	/**

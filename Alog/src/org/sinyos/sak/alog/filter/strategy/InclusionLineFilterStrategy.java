@@ -1,5 +1,8 @@
 package org.sinyos.sak.alog.filter.strategy;
 
+import org.sinyos.framework.common.annotation.Alias;
+
+@Alias("过滤策略-包含/不包含")
 public class InclusionLineFilterStrategy extends AbstractInclusionLineFilterStrategy {
 	private boolean includeOrExclude = true;
 	private IMatchCondition matchCondition;
