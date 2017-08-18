@@ -1,5 +1,6 @@
 package org.sinyos.sak.alog.test;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.MatchResult;
@@ -12,6 +13,7 @@ import org.sinyos.sak.alog.filter.strategy.ContainLineFilterStrategy;
 import org.sinyos.sak.alog.filter.strategy.DateFetchLineFilterStrategy;
 import org.sinyos.sak.alog.filter.strategy.DatePeriodLineFilterStrategy;
 import org.sinyos.sak.alog.filter.strategy.DeleteWordLineFilterStategy;
+import org.sinyos.sak.alog.filter.strategy.MultLineRecordFilterStrategy;
 import org.sinyos.sak.alog.filter.strategy.RegexFetchLineFilterStrategy;
 import org.sinyos.sak.alog.filter.strategy.RegexLineFilterStrategy;
 import org.sinyos.sak.alog.filter.strategy.ReplaceLineFilterStrategy;
@@ -46,7 +48,7 @@ public class LogLineFilterTest {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat(DatePattern.TIMESTAMP);
 		final Date startDate = sdf.parse("2017-07-17 16:30:00,000");
-		final Date endDate = sdf.parse("2017-07-17 17:30:00,000");
+		final Date endDate = sdf.parse("2017-07-17 16:31:00,000");
 //		logFilter.addFilterStrategy(new DateFetchLineFilterStrategy(RegexPattern.REGEX_MATCH_LOG4J_TIMESTAMP, DatePattern.TIMESTAMP) {
 //			@Override
 //			public String handleMatchDate(MatchResult matchResult, String line, Date date) {
@@ -60,9 +62,17 @@ public class LogLineFilterTest {
 //			}
 //		});
 		logFilter.addFilterStrategy(new DatePeriodLineFilterStrategy(RegexPattern.REGEX_MATCH_LOG4J_TIMESTAMP, DatePattern.TIMESTAMP, startDate, endDate));
+		MultLineRecordFilterStrategy multLineStrategy = new MultLineRecordFilterStrategy(10);
+		logFilter.addFilterStrategy(multLineStrategy);
+//		System.out.println(logFilter.filt2String());
+		logFilter.filter();
 		
-		System.out.println(logFilter.filt2String());
-		
+		logFilter = new FileLogFilter(userHomePath + "/Downloads/sf-ext-posp.log");
+		System.out.println(multLineStrategy.getRecordTargetLines());
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		logFilter.setOutputStream(bos);
+		logFilter.filter(multLineStrategy.getRecordTargetLines());
+		System.out.println(new String(bos.toByteArray()));
 //		LogFilter logFilter = new FileLogFilter(userHomePath + "/05-backup/清结算日志.txt");
 //		logFilter.addFilterStrategy(new SimplePrefixIgnoreLineFilterStrategy("Hibernate: select dictionary0_"));
 //		logFilter.addFilterStrategy(new SimplePrefixIgnoreLineFilterStrategy("Hibernate: select sequencere0_"));

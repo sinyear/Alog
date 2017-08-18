@@ -1,7 +1,7 @@
 package org.sinyos.sak.alog.filter.strategy;
 
-public abstract class AbstractChainLineFilterStrategy implements LineFilterStrategy, ILineFilterStrategyChain {
-	protected LineFilterStrategy next;
+public abstract class AbstractChainLineFilterStrategy extends WrapLineFilterStrategy implements ILineFilterStrategyChain {
+	protected WrapLineFilterStrategy next;
 	
 	@Override
 	public LineFilterResult filter(LineFilterResult result) {
@@ -12,12 +12,12 @@ public abstract class AbstractChainLineFilterStrategy implements LineFilterStrat
 		return rslt;
 	}
 	
-	public LineFilterStrategy chain(LineFilterStrategy next) {
+	public WrapLineFilterStrategy chain(WrapLineFilterStrategy next) {
 		this.next = next;
 		return this;
 	}
 	
-	public LineFilterStrategy next() {
+	public WrapLineFilterStrategy next() {
 		return next;
 	}
 }

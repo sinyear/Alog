@@ -1,5 +1,5 @@
 package org.sinyos.sak.alog.filter.strategy;
 
 public interface ILineFilterStrategyChain {
-	public LineFilterStrategy next();
+	public WrapLineFilterStrategy next();
 }

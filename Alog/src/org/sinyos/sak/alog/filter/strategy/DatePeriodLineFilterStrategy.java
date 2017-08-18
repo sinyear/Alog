@@ -3,6 +3,9 @@ package org.sinyos.sak.alog.filter.strategy;
 import java.util.Date;
 import java.util.regex.MatchResult;
 
+import org.sinyos.framework.common.annotation.Alias;
+
+@Alias("过滤策略-时间选择")
 public class DatePeriodLineFilterStrategy extends DateFetchLineFilterStrategy {
 	private Date startDate;
 	private Date endDate;

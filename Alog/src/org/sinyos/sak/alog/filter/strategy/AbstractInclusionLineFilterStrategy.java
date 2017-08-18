@@ -24,7 +24,7 @@ public abstract class AbstractInclusionLineFilterStrategy extends AbstractChainL
 	protected LineFilterResult includeFilter(LineFilterResult result, String line, boolean condition) {
 		if (condition) {
 			// 包含关系则继续处理下一个，最后才写入
-			LineFilterStrategy nextStrategy = next();
+			WrapLineFilterStrategy nextStrategy = next();
 			if (nextStrategy != null) {
 				return nextStrategy.filter(result);
 			}
@@ -40,7 +40,7 @@ public abstract class AbstractInclusionLineFilterStrategy extends AbstractChainL
 	protected LineFilterResult excludeFilter(LineFilterResult result, String line, boolean condition) {
 		if (condition) {
 			// 不包含关系则继续处理下一个，最后才忽略
-			LineFilterStrategy nextStrategy = next();
+			WrapLineFilterStrategy nextStrategy = next();
 			if (nextStrategy != null) {
 				return nextStrategy.filter(result);
 			}

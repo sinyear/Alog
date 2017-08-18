@@ -10,7 +10,7 @@ public class SimpleRepeatCountLineFilterStrategy implements LineFilterStrategy {
 	private TreeMap<String, Integer> repeatCountMap = new TreeMap<String, Integer>();
 	
 	@Override
-	public LineFilterResult filter(LineFilterResult result) {
+	public LineFilterResult filter(LineFilterResult result, long lineNumber) {
 		String line = result.getLine();
 		Integer count = 1;
 		if (repeatCountMap.containsKey(line)) {

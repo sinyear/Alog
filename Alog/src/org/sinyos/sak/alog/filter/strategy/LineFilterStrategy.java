@@ -6,5 +6,5 @@ package org.sinyos.sak.alog.filter.strategy;
  *
  */
 public interface LineFilterStrategy {
-	public LineFilterResult filter(LineFilterResult result);
+	public LineFilterResult filter(LineFilterResult result, long lineNumber);
 }
