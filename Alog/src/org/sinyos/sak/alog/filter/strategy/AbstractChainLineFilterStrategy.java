@@ -1,12 +1,10 @@
 package org.sinyos.sak.alog.filter.strategy;
 
-import java.io.IOException;
-
 public abstract class AbstractChainLineFilterStrategy implements LineFilterStrategy, ILineFilterStrategyChain {
 	protected LineFilterStrategy next;
 	
 	@Override
-	public LineFilterResult filter(LineFilterResult result) throws IOException {
+	public LineFilterResult filter(LineFilterResult result) {
 		LineFilterResult rslt = result;
 		if (next() != null) {
 			rslt = next().filter(rslt);

@@ -1,7 +1,5 @@
 package org.sinyos.sak.alog.filter.strategy;
 
-import java.io.IOException;
-
 import org.sinyos.framework.common.annotation.Alias;
 
 @Alias("过滤策略-正则替换")
@@ -25,7 +23,7 @@ public class ReplaceLineFilterStrategy extends AbstractChainLineFilterStrategy {
 
 
 	@Override
-	public LineFilterResult filter(LineFilterResult result) throws IOException {
+	public LineFilterResult filter(LineFilterResult result) {
 		String line = result.getLine();
 		if (firstOrAll) {
 			line = line.replaceFirst(regex, replacement);

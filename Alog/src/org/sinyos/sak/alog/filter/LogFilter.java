@@ -59,7 +59,7 @@ public class LogFilter {
 						break ;
 					}
 				}
-				if (null ==  active || LineFilterActive.NONE == active) {
+				if (null ==  active || LineFilterActive.NONE == active || result.getLine() == null) {
 					continue ;
 				}
 				if (LineFilterActive.BREAK == active) {

@@ -1,6 +1,5 @@
 package org.sinyos.sak.alog.filter.strategy;
 
-import java.io.IOException;
 /**
  * 包含/不包含（处理与忽略）过滤策略
  * @author zw
@@ -12,7 +11,7 @@ public abstract class AbstractInclusionLineFilterStrategy extends AbstractChainL
 	}
 
 	@Override
-	public LineFilterResult filter(LineFilterResult result) throws IOException {
+	public LineFilterResult filter(LineFilterResult result) {
 		String line = result.getLine();
 		boolean conditon = matchCondition(line);
 		if (includeOrExclude()) {
@@ -22,7 +21,7 @@ public abstract class AbstractInclusionLineFilterStrategy extends AbstractChainL
 		}
 	}
 	
-	protected LineFilterResult includeFilter(LineFilterResult result, String line, boolean condition) throws IOException {
+	protected LineFilterResult includeFilter(LineFilterResult result, String line, boolean condition) {
 		if (condition) {
 			// 包含关系则继续处理下一个，最后才写入
 			LineFilterStrategy nextStrategy = next();
@@ -38,7 +37,7 @@ public abstract class AbstractInclusionLineFilterStrategy extends AbstractChainL
 		return result;
 	}
 	
-	protected LineFilterResult excludeFilter(LineFilterResult result, String line, boolean condition) throws IOException {
+	protected LineFilterResult excludeFilter(LineFilterResult result, String line, boolean condition) {
 		if (condition) {
 			// 不包含关系则继续处理下一个，最后才忽略
 			LineFilterStrategy nextStrategy = next();

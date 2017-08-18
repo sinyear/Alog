@@ -2,6 +2,7 @@ package org.sinyos.sak.alog.common;
 
 import org.sinyos.framework.common.annotation.Alias;
 
+@Alias("正则匹配库")
 public final class RegexPattern {
 	@Alias("正则匹配-日期（yyyy-MM-dd）")
 	public final static String REGEX_MATCH_DATE = "((?:19|20)\\d\\d)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])";
